@@ -22,7 +22,7 @@ app.on_startup = signals.Signal(app)
 async def on_startup():
   for r in routes:
     app.router.add_route(r[0], r[1], r[2])
-  app.router.add_static("/", os.path.join(os.path.dirname(__file__), "static"))
+  app.router.add_static("/", os.path.join(os.path.dirname(__file__), "../static"))
 
   pool = await aiopg.create_pool(
     loop=app.loop,
