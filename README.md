@@ -21,8 +21,8 @@ will probably hack you.
 - Install [PostgreSQL 9.5+](https://www.postgresql.org)
 - Build the save renderer from [source](https://github.com/simtr/The-Powder-Toy)
   using `--renderer` and move the `Render` executable into `renderer/`
-- Build The Powder Toy from a modified source (change SERVER and STATICSERVER)
-  in `src/Config.h` to `localhost:8080` or whatever)
+- Build The Powder Toy from a modified source (change SERVER and STATICSERVER in
+  `src/Config.h` to `localhost:8080` or whatever)
 - `pip install -r requirements.txt`
 - `set DATABASE=postgres://user@host:port/database`
 - `psql -f schema.sql`
