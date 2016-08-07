@@ -52,7 +52,7 @@ class EditTagEndpoint(JsonEndpoint):
           web.HTTPBadRequest,
           "Tag already exists"
         )
-      if tagCount >= app["config"]["saves"]["tagLimit"]:
+      if tagCount >= req.app["config"]["saves"]["tagLimit"]:
         raise self.exception(
           web.HTTPBadRequest,
           "Tag limit reached"

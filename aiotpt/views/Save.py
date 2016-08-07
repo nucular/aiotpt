@@ -36,15 +36,15 @@ class SaveEndpoint(LegacyEndpoint):
       if result:
         saveId = result.id
 
-    rendererDir = app["config"]["renderer"]["dir"]
-    rendererExecutable = app["config"]["renderer"]["executable"]
+    rendererDir = req.app["config"]["renderer"]["dir"]
+    rendererExecutable = req.app["config"]["renderer"]["executable"]
 
     saveData = saveFileField.file.read()
     saveFilePath = os.path.join(rendererDir, "save.cps")
     with open(saveFilePath, "wb") as f:
       f.write(saveData)
 
-    if app["config"]["renderer"]["async"]:
+    if req.app["config"]["renderer"]["async"]:
       process = await asyncio.create_subprocess_exec(
         os.path.join(rendererDir, rendererExecutable),
         saveFilePath, os.path.join(rendererDir, "preview")

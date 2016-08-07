@@ -9,8 +9,8 @@ class StartupEndpoint(JsonEndpoint):
 
     loggedIn = req["session"] is not None
     return self.response({
-      "Updates": app["config"]["startup"]["updates"],
+      "Updates": req.app["config"]["startup"]["updates"],
       "Notifications": [],
       "Session": loggedIn,
-      "MessageOfTheDay": app["config"]["startup"]["motd"]
+      "MessageOfTheDay": req.app["config"]["startup"]["motd"]
     })
