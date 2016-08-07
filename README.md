@@ -26,7 +26,7 @@ will probably hack you.
 - Build The Powder Toy from a modified source (change SERVER and STATICSERVER in
   `src/Config.h` to the host and port of your server, e.g. `localhost:8080`)
 - `pip install -r requirements.txt`
-- `set DATABASE=postgres://user@host:port/database`
+- `set DATABASE_URL=postgres://user@host:port/database`
 - `psql -f schema.sql`
 - `python -m aiotpt`
 

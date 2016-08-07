@@ -11,7 +11,7 @@ env:
   global:
   - PGPORT=5433
   - PGHOST=localhost
-  - DATABASE=postgres://postgres@localhost:5433/aiotpt
+  - DATABASE_URL=postgres://postgres@localhost:5433/aiotpt
 
 services:
   - postgresql
