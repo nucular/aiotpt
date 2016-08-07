@@ -1,6 +1,6 @@
 import argparse, asyncio, sys
 from aiohttp import web
-from .app import app
+from .app import create_app
 from .config import config
 
 def num(type, min=None, max=None):
@@ -44,5 +44,6 @@ parser.add_argument("--port", "-P",
 if __name__ == "__main__":
   args = parser.parse_args()
   loop = asyncio.get_event_loop()
+  app = create_app(loop=loop)
   loop.run_until_complete(app.on_startup.send())
   web.run_app(app, host=args.hostname, port=args.port)

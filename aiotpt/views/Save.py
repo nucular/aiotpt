@@ -36,31 +36,34 @@ class SaveEndpoint(LegacyEndpoint):
       if result:
         saveId = result.id
 
+    rendererDir = app["config"]["renderer"]["dir"]
+    rendererExecutable = app["config"]["renderer"]["executable"]
+
     saveData = saveFileField.file.read()
-    saveFilePath = os.path.join(config["renderer"]["dir"], "save.cps")
+    saveFilePath = os.path.join(rendererDir, "save.cps")
     with open(saveFilePath, "wb") as f:
       f.write(saveData)
 
-    if config["renderer"]["async"]:
+    if app["config"]["renderer"]["async"]:
       process = await asyncio.create_subprocess_exec(
-        os.path.join(config["renderer"]["dir"], config["renderer"]["executable"]),
-        saveFilePath, os.path.join(config["renderer"]["dir"], "preview")
+        os.path.join(rendererDir, rendererExecutable),
+        saveFilePath, os.path.join(rendererDir, "preview")
       )
       await process.wait()
     else:
       import subprocess
       subprocess.run([
-        os.path.join(config["renderer"]["dir"], config["renderer"]["executable"]),
-        saveFilePath, os.path.join(config["renderer"]["dir"], "preview")
+        os.path.join(rendererDir, rendererExecutable),
+        saveFilePath, os.path.join(rendererDir, "preview")
       ])
 
-    with open(os.path.join(config["renderer"]["dir"], "preview.png"), "rb") as f:
+    with open(os.path.join(rendererDir, "preview.png"), "rb") as f:
       previewPng = f.read()
-    with open(os.path.join(config["renderer"]["dir"], "preview-small.png"), "rb") as f:
+    with open(os.path.join(rendererDir, "preview-small.png"), "rb") as f:
       previewPngSmall = f.read()
-    with open(os.path.join(config["renderer"]["dir"], "preview.pti"), "rb") as f:
+    with open(os.path.join(rendererDir, "preview.pti"), "rb") as f:
       previewPti = f.read()
-    with open(os.path.join(config["renderer"]["dir"], "preview-small.pti"), "rb") as f:
+    with open(os.path.join(rendererDir, "preview-small.pti"), "rb") as f:
       previewPtiSmall = f.read()
 
     currDate = datetime.now()

@@ -1,7 +1,6 @@
 import re
 from aiohttp import web
 from .. import JsonEndpoint
-from ...config import config
 
 class EditTagEndpoint(JsonEndpoint):
 
@@ -53,7 +52,7 @@ class EditTagEndpoint(JsonEndpoint):
           web.HTTPBadRequest,
           "Tag already exists"
         )
-      if tagCount >= config["saves"]["tagLimit"]:
+      if tagCount >= app["config"]["saves"]["tagLimit"]:
         raise self.exception(
           web.HTTPBadRequest,
           "Tag limit reached"

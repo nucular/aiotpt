@@ -1,5 +1,3 @@
-from .config import config
-
 async def prepareMiddleware(app, handler):
   async def middleware(req):
     # Get peer information

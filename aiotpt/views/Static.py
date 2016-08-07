@@ -1,7 +1,6 @@
 import re, os.path
 from aiohttp import web
 from . import SimpleEndpoint
-from ..config import config
 
 class StaticEndpoint(SimpleEndpoint):
 

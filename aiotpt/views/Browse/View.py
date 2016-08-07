@@ -1,7 +1,6 @@
 import re
 from aiohttp import web
 from .. import JsonEndpoint
-from ...config import config
 from ... import utils
 
 class ViewEndpoint(JsonEndpoint):

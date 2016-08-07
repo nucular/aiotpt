@@ -2,7 +2,6 @@ from hashlib import md5
 import re
 from aiohttp import web
 from . import JsonEndpoint
-from ..config import config
 
 class RegisterEndpoint(JsonEndpoint):
 

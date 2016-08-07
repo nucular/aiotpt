@@ -1,6 +1,5 @@
 from aiohttp import web
 from .. import JsonEndpoint
-from ...config import config
 
 class DeleteEndpoint(JsonEndpoint):
 
@@ -14,7 +13,7 @@ class DeleteEndpoint(JsonEndpoint):
 
     if mode == "Unpublish":
 
-      with db.cursor() as cur:
+      async with db.cursor() as cur:
         await cur.execute("""
           select userId from Saves
           where id = %s and status = 'published'
@@ -30,7 +29,7 @@ class DeleteEndpoint(JsonEndpoint):
       if (req["auth"] >= 2 and req["user"].id == saveRow.userid) \
         or req["user"].elevation == "moderator" \
         or req["user"].elevation == "administrator":
-        with db.cursor() as cur:
+        async with db.cursor() as cur:
           await cur.execute("""
             update Saves
             set status = 'unpublished'
@@ -44,7 +43,7 @@ class DeleteEndpoint(JsonEndpoint):
 
     elif mode == "Delete":
 
-      with db.cursor() as cur:
+      async with db.cursor() as cur:
         await cur.execute("""
           select userId from Saves
           where id = %s
@@ -60,7 +59,7 @@ class DeleteEndpoint(JsonEndpoint):
       if (req["auth"] >= 2 and req["user"].id == saveRow.userid) \
         or req["user"].elevation == "moderator" \
         or req["user"].elevation == "administrator":
-        with db.cursor() as cur:
+        async with db.cursor() as cur:
           await cur.execute("""
             delete from Saves
             where id = %s

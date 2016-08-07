@@ -1,7 +1,6 @@
 from datetime import datetime
 from aiohttp import web
 from . import LegacyEndpoint
-from ..config import config
 
 class VoteEndpoint(LegacyEndpoint):
 

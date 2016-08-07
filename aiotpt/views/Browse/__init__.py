@@ -2,7 +2,6 @@ from datetime import datetime
 import re
 from aiohttp import web
 from .. import JsonEndpoint
-from ...config import config
 from ... import utils
 
 class BrowseEndpoint(JsonEndpoint):
