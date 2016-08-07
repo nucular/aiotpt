@@ -1,5 +1,7 @@
 # aiotpt
 
+[![Build Status](https://travis-ci.org/nucular/aiotpt.svg?branch=master)](https://travis-ci.org/nucular/aiotpt/)
+
 This is an implementation of a server for the falling sand game
 [The Powder Toy](http://powdertoy.co.uk), written in
 [Python](https://python.org) using [aiohttp](http://aiohttp.readthedocs.io) for

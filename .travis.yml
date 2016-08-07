@@ -40,6 +40,7 @@ before_script:
 
 install:
   - pip install -r requirements.txt
+  - pip install pytest-travis-fold
 
 script:
-  - py.test
+  - py.test -v --color=yes --exitfirst --showlocals --durations=5
