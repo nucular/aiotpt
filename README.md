@@ -22,15 +22,21 @@ will probably hack you.
 - Build the save renderer from [source](https://github.com/simtr/The-Powder-Toy)
   using `--renderer` and move the `Render` executable into `renderer/`
 - Build The Powder Toy from a modified source (change SERVER and STATICSERVER in
-  `src/Config.h` to `localhost:8080` or whatever)
+  `src/Config.h` to the host and port of your server, e.g. `localhost:8080`)
 - `pip install -r requirements.txt`
 - `set DATABASE=postgres://user@host:port/database`
 - `psql -f schema.sql`
 - `python -m aiotpt`
 
+## Testing
+
+- Install aiotpt as described above
+- `pip install pytest`
+- `py.test`
+
 ## Todo
 
-- Proper unit testing using [pytest](http://pytest.org)
+- Unit tests for all views
 - Allow static storage of saves instead of storing them inside the database
 - Inline documentation
 - Static HTML frontend/website
