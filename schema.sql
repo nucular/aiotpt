@@ -147,7 +147,7 @@ create table Tags (
   name text
     not null unique
 );
-create index Tags_content on Tags(content);
+create index Tags_name on Tags(name);
 
 create table TagRefs (
   saveId serial

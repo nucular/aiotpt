@@ -33,7 +33,7 @@ logging.config.dictConfig({
 
 config = {
   "net": {
-    "port": os.environ.get("PORT", 8080),
+    "port": int(os.environ.get("PORT", 8080)),
     "hostname": os.environ.get("HOSTNAME", "localhost")
   },
 
