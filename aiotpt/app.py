@@ -1,4 +1,5 @@
 import asyncio
+import logging
 import os.path
 
 from aiohttp import web, signals
@@ -11,6 +12,8 @@ from .session import sessionMiddleware
 from .prep import prepareMiddleware
 from .routes import routes
 
+log = logging.getLogger(__name__)
+
 def create_app(loop=None):
   app = web.Application(
     loop=loop or asyncio.get_event_loop(),
@@ -22,6 +25,7 @@ def create_app(loop=None):
   )
   app.on_startup = signals.Signal(app)
 
+  log.debug(config)
   app["config"] = config
 
   async def on_startup():
