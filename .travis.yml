@@ -11,7 +11,7 @@ env:
   global:
   - PGPORT=5433
   - PGHOST=localhost
-  - DATABASE_URL=postgres://postgres@localhost:5433/aiotpt
+  - DATABASE_URL=postgres://postgres@localhost:5433/aiotpt_test
 
 services:
   - postgresql
@@ -28,19 +28,32 @@ addons:
     sources:
     - precise-pgdg-9.5
     packages:
+    # PostgreSQL
     - postgresql-9.5
     - postgresql-contrib-9.5
+    # Perl
+    - perl
+    - cpanminus
   postgresql: 9.5
 
-before_script:
-  - sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
-  - sudo /etc/init.d/postgresql restart
-  - psql -U postgres -c 'create database aiotpt;'
-  - psql -f schema.sql
-
 install:
+  # Install Sqitch
+  - cpanm --notest --skip-satisfied --force App::Sqitch
+  # Install aiotpt dependencies
   - pip install -r requirements.txt
   - pip install pytest-travis-fold
 
+before_script:
+  # Configure PostgreSQL 9.5 with the preinstalled settings and restart it
+  - sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.5/main/pg_hba.conf
+  - sudo /etc/init.d/postgresql restart
+  # Set up the database
+  - createdb aiotpt_test
+  - sqitch engine alter pg --target test
+  - sqitch deploy
+
 script:
+  # Verify the database
+  - sqitch verify
+  # Run the test suite
   - py.test -v --color=yes --exitfirst --showlocals --durations=5
