@@ -1,4 +1,4 @@
--- Verify aiotpt:create-schema-aiotpt on pg
+-- Verify aiotpt:schema-aiotpt on pg
 
 begin;
 

@@ -1,4 +1,4 @@
--- Revert aiotpt:create-schema-aiotpt from pg
+-- Revert aiotpt:schema-aiotpt from pg
 
 begin;
 

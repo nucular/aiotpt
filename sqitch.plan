@@ -2,4 +2,4 @@
 %project=aiotpt
 %uri=https://github.com/nucular/aiotpt/
 
-create-schema-aiotpt 2016-08-29T19:05:27Z nucular <nucularer+sqitch@gmail.com> # Create main schema
+schema-aiotpt 2016-08-29T19:05:27Z nucular <nucularer+sqitch@gmail.com> # Create main schema
