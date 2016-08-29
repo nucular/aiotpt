@@ -1,10 +1,11 @@
-import datetime, os, urllib.parse
-import logging.config
+import configparser
+import datetime
+import logging, logging.config
+import os
+import urllib.parse
 from . import __version__
 
-urllib.parse.uses_netloc.append("postgres")
-url = urllib.parse.urlparse(os.environ.get("DATABASE_URL",
-  "postgres://postgres@localhost:5432/postgres"))
+log = logging.getLogger(__name__)
 
 logging.config.dictConfig({
   "version": 1,
@@ -31,6 +32,32 @@ logging.config.dictConfig({
   }
 })
 
+urllib.parse.uses_netloc.append("postgres")
+urllib.parse.uses_netloc.append("pg")
+
+dburi = None
+if "DATABASE_URL" in os.environ:
+  dburi = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+  log.info("Loaded DBURI from $DATABASE_URL")
+else:
+  if os.path.isfile("sqitch.conf"):
+    parser = configparser.ConfigParser()
+    with open("sqitch.conf", "rt") as f:
+      parser.read_file(f)
+    if parser.has_option("engine \"pg\"", "target"):
+      target = parser.get("engine \"pg\"", "target")
+      log.debug("Sqitch target is %s", target)
+      targetsection = "target \"{}\"".format(target)
+      if parser.has_option(targetsection, "uri"):
+        dburi = urllib.parse.urlparse(parser.get(targetsection, "uri")[3:])
+        log.info("Loaded DBURI from sqitch.conf")
+
+# Log the DBURI but redact the password
+dburistr = dburi.geturl()
+if dburi.password:
+  dburistr = dburistr.replace(":" + dburi.password + "@", ":REDACTED@")
+log.info("DBURI: %s", dburistr)
+
 config = {
   "net": {
     "port": int(os.environ.get("PORT", 8080)),
@@ -38,11 +65,11 @@ config = {
   },
 
   "database": {
-    "database": url.path[1:],
-    "user": url.username,
-    "password": url.password,
-    "host": url.hostname,
-    "port": url.port,
+    "database": dburi.path[1:],
+    "user": dburi.username,
+    "password": dburi.password,
+    "host": dburi.hostname,
+    "port": dburi.port,
     "maxsize": 20,
     "echo": True
   },
