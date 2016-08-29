@@ -11,7 +11,6 @@ async def prepareMiddleware(app, handler):
       try:
         res = await handler(req)
       except Exception as e:
-        print(e)
         raise e
 
     return res

@@ -25,7 +25,6 @@ def create_app(loop=None):
   )
   app.on_startup = signals.Signal(app)
 
-  log.debug(config)
   app["config"] = config
 
   async def on_startup():

@@ -9,7 +9,6 @@ class LoginEndpoint(JsonEndpoint):
     req = self.request
     db = req["db"]
     POST = await req.post()
-    print(POST)
 
     userName = self.sanitizeString(POST, "Username")
     passwordHash = self.sanitizeString(POST, "Hash")
