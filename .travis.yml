@@ -9,19 +9,17 @@ sudo: required
 
 env:
   global:
-  - PGPORT=5433
   - PGHOST=localhost
-  - DATABASE_URL=postgres://postgres@localhost:5433/aiotpt_test
+  - PGPORT=5433
+  - PGDATABASE=aiotpt_test
+  - PGUSER=postgres
+  - DATABASE_URL=postgres://$PGUSER@$PGHOST:$PGPORT/$PGDATABASE
 
 services:
   - postgresql
 
 # addons:
 #   postgresql: "9.5"
-#
-# before_script:
-#   - psql -U postgres -c 'create database aiotpt;'
-#   - psql -f schema.sql -U postgres
 
 addons:
   apt:
@@ -38,7 +36,7 @@ addons:
 
 install:
   # Install Sqitch
-  - sudo cpanm --verbose --no-interactive --no-man-pages --notest --skip-satisfied --force App::Sqitch
+  - sudo cpanm --quiet --no-interactive --no-man-pages --notest --skip-satisfied --force App::Sqitch
   # Install aiotpt dependencies
   - pip install -r requirements.txt
   - pip install pytest-travis-fold
@@ -49,6 +47,7 @@ before_script:
   - sudo /etc/init.d/postgresql restart
   # Set up the database
   - createdb aiotpt_test
+  - sqitch target add test $DATABASE_URL
   - sqitch engine alter pg --target test
   - sqitch deploy
 
