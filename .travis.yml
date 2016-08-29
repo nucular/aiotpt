@@ -38,7 +38,7 @@ addons:
 
 install:
   # Install Sqitch
-  - cpanm --notest --skip-satisfied --force App::Sqitch
+  - cpanm --verbose --no-interactive --no-man-pages --notest --skip-satisfied --force App::Sqitch
   # Install aiotpt dependencies
   - pip install -r requirements.txt
   - pip install pytest-travis-fold
